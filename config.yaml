@@ -4,4 +4,7 @@ title: "Wojciech Hellwing"
 theme: "wowchemy-starter-academic"
 pagination:
   pagerSize: 10
-
+outputs:
+  home:
+    - HTML
+    - RSS
