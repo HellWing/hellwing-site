@@ -1,0 +1,7 @@
+baseURL: "https://HellWing.github.io/hellwing-site/"
+languageCode: "en-us"
+title: "Wojciech Hellwing"
+theme: wowchemy-starter-academic
+paginate: 10
+contentDir: content
+publishDir: public
