@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="container page--home">
+  <h1>{{ .Site.Params.name }}</h1>
+  <p>{{ .Site.Params.description }}</p>
+  <p><a class="button" href="{{ "about/" | relURL }}">About Me</a></p>
+  <ul class="projects">
+    {{ range .Site.Menus.main }}
+      <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}
