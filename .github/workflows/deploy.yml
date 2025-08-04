@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # Updated to allow writing to gh-pages branch
+  contents: write
   pages: write
   id-token: write
 
@@ -19,6 +19,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Clear cache
+        run: rm -rf .git
       - uses: actions/checkout@v4
         with:
           submodules: false
