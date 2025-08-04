@@ -3,42 +3,61 @@ name: Build & Deploy
 on:
   push:
     branches:
-      - main   # or whatever branch you deploy from
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
-          # don’t try to checkout any Git submodules
           submodules: false
-
+          fetch-depth: 0
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
-
-      - name: Ensure Hugo Modules are in place
+          hugo-version: '0.137.1'
+          extended: true
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+      - name: Ensure Hugo Modules
         run: |
-          hugo mod tidy        # download any modules listed in config.yaml
-          # (optional) you can also pin specific ones
-          # hugo mod get github.com/wowchemy/starter-academic
-          # hugo mod get github.com/HugoBlox/hugo-blox-builder/starters/academic-cv
-
+          hugo mod tidy
+          hugo mod get -u
       - name: Build with Hugo
-        run: hugo --minify
-
+        run: hugo --minify --verbose
       - name: Copy homepage to root
         run: |
           if [ -f public/home/index.html ]; then
             cp public/home/index.html public/index.html
           fi
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: public
-
+          path: ./public
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
