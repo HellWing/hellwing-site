@@ -1,29 +1,22 @@
-name: Build & Deploy
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v3
-      with:
-        hugo-version: 'latest'
-    - name: Build
-      run: hugo --minify
-      
-    - name: Copy homepage to root
-      run: |
-      mkdir -p public
-      cp public/home/index.html public/index.html 
-      
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+      - uses: actions/checkout@v2
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+      - name: Build with Hugo
+        run: hugo --minify
+
+      - name: Copy homepage to root
+        run: |
+          mkdir -p public
+          cp public/home/index.html public/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
