@@ -16,6 +16,12 @@ jobs:
         hugo-version: 'latest'
     - name: Build
       run: hugo --minify
+      
+    - name: Copy homepage to root
+      run: |
+      mkdir -p public
+      cp public/home/index.html public/index.html 
+      
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
