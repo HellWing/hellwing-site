@@ -19,13 +19,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clear cache
-        run: rm -rf .git
+      - name: Clean workspace
+        run: |
+          rm -rf $GITHUB_WORKSPACE/*
+          rm -rf $GITHUB_WORKSPACE/.*
       - uses: actions/checkout@v4
         with:
           submodules: false
           fetch-depth: 0
-          fetch-tags: true
+          clean: true
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
@@ -56,3 +58,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
+          force_orphan: true
