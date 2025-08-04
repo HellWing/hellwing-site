@@ -8,9 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
         with:
+          # don’t try to checkout any Git submodules
           submodules: false
 
       - name: Setup Hugo
@@ -18,13 +20,19 @@ jobs:
         with:
           hugo-version: 'latest'
 
+      - name: Ensure Hugo Modules are in place
+        run: |
+          hugo mod tidy        # download any modules listed in config.yaml
+          # (optional) you can also pin specific ones
+          # hugo mod get github.com/wowchemy/starter-academic
+          # hugo mod get github.com/HugoBlox/hugo-blox-builder/starters/academic-cv
+
       - name: Build with Hugo
         run: hugo --minify
 
       - name: Copy homepage to root
         run: |
           if [ -f public/home/index.html ]; then
-            mkdir -p public
             cp public/home/index.html public/index.html
           fi
 
