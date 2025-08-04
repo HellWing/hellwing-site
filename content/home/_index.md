@@ -2,6 +2,9 @@
 title: "Welcome"
 date: 2025-08-04T00:00:00+00:00
 draft: false
+outputs:
+  - HTML
+  - RSS
 menu:
   main:
     weight: 1
