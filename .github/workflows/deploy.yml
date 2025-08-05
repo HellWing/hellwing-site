@@ -51,7 +51,10 @@ jobs:
         run: |
           if [ -f public/home/index.html ]; then
             cp public/home/index.html public/index.html
-          fi
+          else
+            echo "Error: public/home/index.html not found"
+            exit 1
+          fi          
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
