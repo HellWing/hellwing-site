@@ -49,8 +49,9 @@ jobs:
         run: hugo --minify --logLevel info
       - name: Copy homepage to root
         run: |
+          ls -l public/home/
           if [ -f public/home/index.html ]; then
-            cp public/home/index.html public/index.html
+            cp -v public/home/index.html public/index.html
           else
             echo "Error: public/home/index.html not found"
             exit 1
