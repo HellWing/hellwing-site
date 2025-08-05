@@ -1,4 +1,8 @@
 baseURL: "https://hellwing.github.io/hellwing-site/"
 title: "Wojciech Hellwing's Academic Website"
 theme: github.com/HugoBlox/hugo-blox-builder/starters/academic-cv
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
 
