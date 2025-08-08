@@ -63,4 +63,5 @@ jobs:
           publish_dir: ./public
           publish_branch: gh-pages
           force_orphan: true
+          keep_files: false
 cache-bust: Tue Aug  5 01:16:00 PM CEST 2025
