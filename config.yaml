@@ -1,4 +1,4 @@
-baseURL: "https://hellwing.github.io/"
+baseURL: "https://hellwing.github.io/hellwing-site/"
 module:
   vendor: true
 languageCode: "en-us"
