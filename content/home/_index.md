@@ -1,19 +1,18 @@
 ---
-title: "Welcome"
-date: 2025-08-04T00:00:00+00:00
-draft: false
-outputs:
-  - HTML
-  - RSS
-menu:
-  main:
-    weight: 1
+title: "Wojciech A. Hellwing"
+subtitle: "Cosmic web, velocities, and beyond-ΛCDM tests of gravity"
+# No menu block here to avoid duplication
 design:
-  show_social: true
-  show_projects: true
+  hero:
+    enable: true
+    text: "Environment-aware growth tests, simulation pipelines, and public data."
+    ctas:
+      - text: "CV (PDF)"
+        url: "/media/cv.pdf"
+      - text: "Publications"
+        url: "/publications/"
+      - text: "Software & Data"
+        url: "/software/"
 ---
-
-Welcome to the academic website of **Wojciech Hellwing**, Associate Professor at CTP PAS.
-TEST 123
-[Download my CV](/files/CV_Hellwing.pdf){.button}
+Short punchy paragraph, one or two sentences, stating your research focus, leadership, and current projects relevant to ERC/NCN panels.
 

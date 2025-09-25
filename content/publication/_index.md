@@ -1,14 +1,5 @@
 ---
 title: "Publications"
-date: 2025-08-04
-draft: false
+summary: "Selected and full list with links to ADS/arXiv and code/data where applicable."
+# Blox/Wowchemy will render a list from child items
 ---
-
-## Selected Highlights
-
-1. Hellwing et al. (2024). Title...
-2. ...
-
-## Full List
-
-[Download full publication list PDF](/files/Publications_Hellwing.pdf)

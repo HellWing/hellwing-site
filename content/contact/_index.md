@@ -1,15 +1,9 @@
 ---
 title: "Contact"
-date: 2025-08-04
-draft: false
 ---
+**Center for Theoretical Physics, Polish Academy of Sciences**  
+Al. Lotników 32/46, 02-668 Warsaw, Poland
 
-**Email:** hellwing@cft.edu.pl  
-**Office:** Al. Lotników 32/46, Warsaw  
+Email: hellwing@cft.edu.pl  
+GitHub: https://github.com/HellWing
 
-<form action="#" method="POST">
-<input type="text" name="name" placeholder="Your name"><br>
-<input type="email" name="email" placeholder="Your email"><br>
-<textarea name="message" placeholder="Your message"></textarea><br>
-<button type="submit">Send</button>
-</form>

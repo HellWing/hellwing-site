@@ -1,8 +1,6 @@
 ---
-title: "Teaching & Supervision"
-date: 2025-08-04
-draft: false
+title: "Teaching"
+summary: "Syllabi, slides, assignments."
 ---
+Link recent courses, add PDFs and GitHub classroom links.
 
-- **Courses**: Numerical Cosmology, Challenges in Modern Cosmology  
-- **Supervision**: 4 PhD students, 3 postdocs  
