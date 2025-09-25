@@ -1,4 +1,6 @@
-baseURL: "https://HellWing.github.io/hellwing-site/"
+baseURL: "https://hellwing.github.io/"
+module:
+  vendor: true
 languageCode: "en-us"
 title: "Wojciech Hellwing"
 theme: "wowchemy-starter-academic"
