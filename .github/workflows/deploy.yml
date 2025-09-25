@@ -2,65 +2,77 @@ name: Build & Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clean workspace
-        run: |
-          rm -rf $GITHUB_WORKSPACE/*
-          rm -rf $GITHUB_WORKSPACE/.*
       - uses: actions/checkout@v4
         with:
-          submodules: false
+          submodules: true
           fetch-depth: 0
-          clean: true
+
+      - name: Setup Go (for Hugo Modules)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      - name: Setup Node (Tailwind CLI + plugins)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install frontend dev-deps
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm i --no-fund --no-audit
+          fi
+
+      - name: Cache Go & Hugo modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/hugo
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: ${{ runner.os }}-hugo-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-hugo-
+
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.137.1'
+          hugo-version: '0.150.0'
           extended: true
-      - name: Setup Node
-        uses: actions/setup-node@v4
+
+      - name: Build site
+        run: hugo --minify
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          node-version: '18'
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.21'
-      - name: Ensure Hugo Modules
-        run: |
-          hugo mod tidy
-          hugo mod get -u
-      - name: Build with Hugo
-        run: hugo --minify --logLevel info
-      - name: Copy homepage to root
-        run: |
-          ls -l public/home/
-          if [ -f public/home/index.html ]; then
-            cp -v public/home/index.html public/index.html
-          else
-            echo "Error: public/home/index.html not found"
-            exit 1
-          fi          
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: gh-pages
-          force_orphan: true
-          keep_files: false
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
